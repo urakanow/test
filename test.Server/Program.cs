@@ -5,6 +5,8 @@ namespace test.Server
     {
         public static void Main(string[] args)
         {
+            string productionCors = "productionCorsPolicy";
+
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
@@ -13,6 +15,16 @@ namespace test.Server
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(productionCors, builder =>
+                {
+                    builder.WithOrigins("")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             var app = builder.Build();
 
@@ -27,6 +39,13 @@ namespace test.Server
             }
 
             app.UseHttpsRedirection();
+            app.UseRouting();
+
+            if (app.Environment.IsProduction())
+            {
+                app.UseHsts();
+                app.UseCors(productionCors);
+            }
 
             app.UseAuthorization();
 
