@@ -20,7 +20,7 @@ namespace test.Server
             {
                 options.AddPolicy(productionCors, builder =>
                 {
-                    builder.WithOrigins("")
+                    builder.WithOrigins("https://urakanow.github.io")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
