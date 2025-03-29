@@ -3,7 +3,7 @@ name: Deploy Frontend to Github pages
 on:
   push:
     branches:
-      - main  # Runs only when `main` is updated
+      - master  # Runs only when `main` is updated
 permissions:
   contents: write
 
